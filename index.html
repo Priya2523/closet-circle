@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Closet Circle — Wear the Vision</title>
+  <meta name="description" content="Closet Circle: AI-powered virtual wardrobe to organize, style, and reuse your clothes.">
+  <!-- WhatsApp / social preview (replace og:image and og:url with your hosted URL) -->
+  <meta property="og:title" content="Closet Circle — Your closet, smarter" />
+  <meta property="og:description" content="AI-powered virtual wardrobe with a friendly chatbot stylist." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=Closet+Circle" />
+  <meta property="og:url" content="https://your-hosted-url.example" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-1:#f5f3ff; --bg-2:#fff7ed; --bg-3:#ecfeff;
+      --brand-1:#7c3aed; --brand-2:#f43f5e; --brand-3:#22d3ee; --brand-4:#f59e0b;
+      --ink:#0f172a; --muted:#475569; --card:rgba(255,255,255,.82);
+      --shadow:0 10px 30px rgba(2,6,23,.15); --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:"Outfit",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:linear-gradient(120deg,var(--bg-1) 0%,var(--bg-2) 40%,var(--bg-3) 100%);}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1120px;margin:0 auto;padding:0 1rem}
+    .shadow{box-shadow:var(--shadow)}
+    .card{background:var(--card);backdrop-filter:blur(8px) saturate(160%);border:1px solid rgba(2,6,23,.06);border-radius:var(--radius);}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 1.1rem;border-radius:14px;font-weight:700;border:1px solid rgba(2,6,23,.08);cursor:pointer;transition:.18s ease;}
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{color:#fff;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));border:none}
+    .btn-ghost{background:#fff;color:var(--brand-1)}
+    .tag{display:inline-block;font-weight:700;font-size:.8rem;padding:.4rem .7rem;border-radius:999px;background:linear-gradient(90deg,#eef2ff,#fdf2f8);color:#6b21a8}
+    .grad-text{background:linear-gradient(90deg,var(--brand-1),var(--brand-2),var(--brand-3));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+    /* Blobs */
+    .blob{position:absolute;filter:blur(42px);opacity:.35;pointer-events:none;animation:float 18s ease-in-out infinite}
+    .blob.one{width:520px;height:520px;background:radial-gradient(circle at 30% 30%,var(--brand-1),transparent 60%);top:-120px;left:-120px}
+    .blob.two{width:460px;height:460px;background:radial-gradient(circle at 70% 30%,var(--brand-2),transparent 60%);top:18%;right:-140px;animation-delay:4s}
+    .blob.three{width:520px;height:520px;background:radial-gradient(circle at 40% 70%,var(--brand-3),transparent 60%);bottom:-160px;left:10%;animation-delay:8s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+    @media(prefers-reduced-motion:reduce){.blob{animation:none}}
+
+    header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.7);backdrop-filter:blur(10px);border-bottom:1px solid rgba(2,6,23,.06)}
+    header nav a{font-weight:600;opacity:.9}
+    header nav a:hover{color:#4338ca}
+
+    .hero{position:relative;padding:6rem 0}
+    .hero h1{font-size:clamp(2.2rem,4vw,3.4rem);line-height:1.08;margin:0}
+    .hero p{color:var(--muted);font-size:1.05rem}
+    .chip{display:inline-block;margin:.25rem .35rem 0 0;padding:.5rem .75rem;border-radius:12px;font-weight:700;background:linear-gradient(90deg,#e0f2fe,#fae8ff);color:#0e7490}
+
+    section{padding:4rem 0}
+    .section-title{font-size:clamp(1.6rem,3vw,2rem);font-weight:900;letter-spacing:-.02em}
+    .grid{display:grid;gap:1rem}
+    .grid-3{grid-template-columns:repeat(1,1fr)}
+    .grid-2{grid-template-columns:repeat(1,1fr)}
+    @media(min-width:768px){.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}}
+
+    .pricing .pro{color:#fff;background:linear-gradient(135deg,var(--brand-2),var(--brand-1))}
+
+    details{border-radius:16px;padding:1rem 1.1rem;background:#ffffffd6;border:1px solid rgba(2,6,23,.06)}
+    summary{cursor:pointer;font-weight:700}
+
+    footer{border-top:1px solid rgba(2,6,23,.08);background:rgba(255,255,255,.7);backdrop-filter:blur(10px)}
+
+    /* Chatbot */
+    .chat-fab{position:fixed;right:18px;bottom:18px;z-index:50}
+    .chat{position:fixed;right:18px;bottom:86px;width:min(92vw,380px);z-index:60;display:none}
+    .chat.show{display:block;animation:pop .18s ease}
+    @keyframes pop{from{transform:translateY(8px);opacity:.0}to{transform:translateY(0);opacity:1}}
+    .chat header{position:relative;top:auto;background:#fff;border:none;border-radius:18px 18px 0 0;padding:.9rem 1rem}
+    .chat header .title{font-weight:900}
+    .chat .body{max-height:50vh;overflow:auto;padding:1rem;background:#fff}
+    .chat .bubble{max-width:80%;padding:.6rem .85rem;border-radius:14px;box-shadow:var(--shadow);margin:.35rem 0}
+    .chat .bot{background:#fff}
+    .chat .me{background:linear-gradient(135deg,var(--brand-1),var(--brand-2));color:#fff;margin-left:auto}
+    .chat .quick{display:flex;flex-wrap:wrap;gap:.45rem;padding:.6rem 1rem;background:#fff;border-top:1px solid rgba(2,6,23,.06)}
+    .chat .quick button{border:none;border-radius:12px;padding:.45rem .7rem;font-weight:700;background:#f1f5f9;cursor:pointer}
+    .chat .input{display:flex;gap:.5rem;padding:.8rem 1rem;background:#fff;border-top:1px solid rgba(2,6,23,.06);border-radius:0 0 18px 18px}
+    .chat .input input{flex:1;border:1px solid #e2e8f0;border-radius:12px;padding:.6rem .75rem;font:inherit}
+  </style>
+</head>
+<body>
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+  <div class="blob three"></div>
+
+  <header>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding:.9rem 0">
+      <a href="#" class="grad-text" style="font-size:1.25rem;font-weight:900">Closet Circle</a>
+      <nav style="display:none;gap:1rem" id="nav">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a href="#cta" class="btn btn-primary">Get Early Access</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container" style="display:grid;grid-template-columns:1fr;gap:2rem;align-items:center">
+      <div>
+        <span class="tag">by Wear the Vision</span>
+        <h1 style="margin-top:.6rem">Your closet, <span class="grad-text">smarter</span>.</h1>
+        <p style="margin-top:.6rem">Organize your wardrobe, get AI outfit ideas, and cut fashion waste — all in one app.</p>
+        <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
+          <a class="btn btn-ghost" href="#features">Explore features</a>
+          <button class="btn btn-primary" id="openFromHero">🤖 Try AI Outfit Planner</button>
+        </div>
+        <div style="margin-top:1rem">
+          <span class="chip">AI Outfit Planner</span>
+          <span class="chip">Auto‑tagging</span>
+          <span class="chip">Cost‑per‑wear</span>
+          <span class="chip">Swap/Resell</span>
+        </div>
+      </div>
+      <div class="card shadow" style="padding:1rem">
+        <div style="aspect-ratio:16/10;border-radius:16px;background:linear-gradient(45deg,#ede9fe,#ffe4e6,#cffafe);display:grid;place-items:center;color:#475569;font-weight:700">App preview</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="container">
+      <h2 class="section-title grad-text" style="text-align:center">Everything you need to wear more, buy less</h2>
+      <div class="grid grid-3" style="margin-top:1.2rem">
+        <div class="card shadow" style="padding:1.2rem"><h3>Smart Wardrobe</h3><p style="color:var(--muted)">Upload once; auto‑tag by type, color, season, occasion.</p></div>
+        <div class="card shadow" style="padding:1.2rem"><h3>AI Outfit Planner</h3><p style="color:var(--muted)">Weather, event, mood → instant looks from your own clothes.</p></div>
+        <div class="card shadow" style="padding:1.2rem"><h3>Reuse & Resell</h3><p style="color:var(--muted)">Track cost‑per‑wear, swap with friends, resell idle pieces.</p></div>
+        <div class="card shadow" style="padding:1.2rem"><h3>Calendar & Weather</h3><p style="color:var(--muted)">Plan ahead for trips and events with one tap.</p></div>
+        <div class="card shadow" style="padding:1.2rem"><h3>Smart Reminders</h3><p style="color:var(--muted)">Rotate under‑used items and reduce impulse buys.</p></div>
+        <div class="card shadow" style="padding:1.2rem"><h3>Privacy‑First</h3><p style="color:var(--muted)">Everything is private by default; sharing is opt‑in.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" style="background:#ffffffa8">
+    <div class="container">
+      <h2 class="section-title" style="text-align:center">How it works</h2>
+      <div class="grid grid-2" style="margin-top:1.2rem">
+        <div class="card shadow" style="padding:1rem"><strong>1) Import</strong><p style="color:var(--muted)">Snap photos or import orders from email.</p></div>
+        <div class="card shadow" style="padding:1rem"><strong>2) Auto‑tag</strong><p style="color:var(--muted)">We detect type, color, season, and occasion.</p></div>
+        <div class="card shadow" style="padding:1rem"><strong>3) Plan</strong><p style="color:var(--muted)">AI suggests outfits for your day, weather, and events.</p></div>
+        <div class="card shadow" style="padding:1rem"><strong>4) Reuse</strong><p style="color:var(--muted)">Track wears; swap or resell right from your closet.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container pricing">
+      <h2 class="section-title" style="text-align:center">Simple pricing</h2>
+      <div class="grid grid-2" style="margin-top:1.2rem">
+        <div class="card shadow" style="padding:1.2rem">
+          <h3>Free</h3>
+          <p style="color:var(--muted)">For trying it out</p>
+          <ul style="line-height:1.8">
+            <li>• 100 items</li>
+            <li>• Basic outfit suggestions</li>
+            <li>• Cost‑per‑wear tracking</li>
+          </ul>
+        </div>
+        <div class="card shadow pro" style="padding:1.2rem">
+          <h3>Pro</h3>
+          <p style="opacity:.9">For power users</p>
+          <ul style="line-height:1.8">
+            <li>• Unlimited items</li>
+            <li>• Advanced AI outfits (weather/events)</li>
+            <li>• Swap/Resell marketplace</li>
+          </ul>
+          <a href="#cta" class="btn btn-ghost" style="margin-top:.6rem;background:#fff;color:#6b21a8">Start Free Trial</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="background:#ffffffa8">
+    <div class="container">
+      <h2 class="section-title" style="text-align:center">FAQ</h2>
+      <div class="grid grid-2" style="margin-top:1.2rem">
+        <details open><summary>Do I have to photograph every item?</summary><p style="color:var(--muted)">Start with your top 20. Add more over time or import from order receipts.</p></details>
+        <details><summary>Is my data private?</summary><p style="color:var(--muted)">Yes. Items are private by default; sharing is opt‑in.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex;gap:1rem;align-items:center;justify-content:space-between;padding:1.2rem 0;font-size:.95rem;color:#64748b">
+      <span>© <span id="year"></span> Closet Circle</span>
+      <div style="display:flex;gap:1rem"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+    </div>
+  </footer>
+
+  <button class="btn btn-primary chat-fab shadow" id="chatFab">💬 Chat with Closet Circle</button>
+
+  <div class="chat" id="chat">
+    <div class="card shadow">
+      <header class="shadow" style="border-radius:18px 18px 0 0;display:flex;align-items:center;gap:.6rem;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:.6rem">
+          <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand-1),var(--brand-2),var(--brand-3));"></div>
+          <div class="title">Style Assistant</div>
+        </div>
+        <button class="btn" id="chatClose" style="padding:.3rem .6rem">✕</button>
+      </header>
+      <div class="body" id="chatBody"><div id="messages"></div></div>
+      <div class="quick" id="quick"></div>
+      <div class="input">
+        <input id="msg" type="text" placeholder="Type here or tap a suggestion…" />
+        <button class="btn btn-primary" id="send">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Chatbot — restarts from first question on every open
+    const chat = document.getElementById('chat');
+    const chatFab = document.getElementById('chatFab');
+    const chatClose = document.getElementById('chatClose');
+    const messages = document.getElementById('messages');
+    const quick = document.getElementById('quick');
+    const msg = document.getElementById('msg');
+    const send = document.getElementById('send');
+    const openFromHero = document.getElementById('openFromHero');
+
+    let step = 0;            // current step index
+    let answers = {};        // ephemeral session (no persistence)
+    const unit = { height: 'cm', weight: 'kg' };
+
+    const steps = [
+      { key: 'name',   prompt: "Hi! I'm your style assistant. What's your name?", type: 'text' },
+      { key: 'height', prompt: "What's your height?", type: 'number', min: 100, max: 230 },
+      { key: 'weight', prompt: "Your weight?", type: 'number', min: 30, max: 200 },
+      { key: 'top',    prompt: "Top size?", options: ['XS','S','M','L','XL','XXL'] },
+      { key: 'bottom', prompt: "Bottom size?", options: ['28','30','32','34','36','38'] },
+      { key: 'shoe',   prompt: "Shoe size (UK)?", options: ['6','7','8','9','10','11'] },
+      { key: 'fit',    prompt: "Fit preference?", options: ['Slim','Regular','Relaxed'] },
+    ];
+
+    function bubble(text, who='bot'){
+      const wrap = document.createElement('div');
+      wrap.className = 'bubble ' + (who==='bot'?'bot':'me');
+      wrap.textContent = text;
+      messages.appendChild(wrap);
+      messages.parentElement.scrollTop = messages.parentElement.scrollHeight;
+    }
+
+    function renderQuick(options){
+      quick.innerHTML = '';
+      const s = steps[step];
+      // Unit toggles
+      if(s && s.key==='height'){
+        const cmBtn = document.createElement('button'); cmBtn.textContent = unit.height==='cm' ? 'cm (selected)' : 'cm';
+        cmBtn.addEventListener('click', ()=>{ unit.height='cm'; msg.placeholder='e.g. 170'; }); quick.appendChild(cmBtn);
+        const ftBtn = document.createElement('button'); ftBtn.textContent = unit.height==='ft' ? 'ft/in (selected)' : 'ft/in';
+        ftBtn.addEventListener('click', ()=>{ unit.height='ft'; msg.placeholder="e.g. 5'8"; }); quick.appendChild(ftBtn);
+      }
+      if(s && s.key==='weight'){
+        const kgBtn = document.createElement('button'); kgBtn.textContent = unit.weight==='kg' ? 'kg (selected)' : 'kg';
+        kgBtn.addEventListener('click', ()=>{ unit.weight='kg'; msg.placeholder='e.g. 65'; }); quick.appendChild(kgBtn);
+        const lbBtn = document.createElement('button'); lbBtn.textContent = unit.weight==='lb' ? 'lb (selected)' : 'lb';
+        lbBtn.addEventListener('click', ()=>{ unit.weight='lb'; msg.placeholder='e.g. 150'; }); quick.appendChild(lbBtn);
+      }
+      if(options){
+        options.forEach(o=>{ const b = document.createElement('button'); b.textContent = o; b.addEventListener('click', ()=> handle(o)); quick.appendChild(b); });
+      }
+    }
+
+    function toCmFromFtIn(s){
+      const m = String(s).toLowerCase().match(/(\d+(?:\.\d+)?)\s*(?:ft|')\s*(\d+(?:\.\d+)?)?/);
+      let ft=0,inch=0; if(m){ ft=parseFloat(m[1]); inch=m[2]?parseFloat(m[2]):0; } else {
+        const nums = String(s).match(/\d+/g); if(nums){ ft=parseFloat(nums[0]); inch=nums[1]?parseFloat(nums[1]):0; }
+      }
+      return Math.round(ft*30.48 + inch*2.54);
+    }
+
+    function validate(s, value){
+      if(s.type==='number'){
+        let raw = String(value).trim().toLowerCase();
+        if(s.key==='height'){
+          if(unit.height==='cm'){
+            const n = Number(raw.replace(/[^\d.]/g,''));
+            if(isNaN(n)) return {ok:false,err:'Enter height in cm'}; return {ok:n>=s.min && n<=s.max, err:`Must be ${s.min}-${s.max} cm`, val:n};
+          } else {
+            const cm = toCmFromFtIn(raw);
+            return {ok:cm>=s.min && cm<=s.max, err:`Must be ${s.min}-${s.max} cm`, val:cm};
+          }
+        }
+        if(s.key==='weight'){
+          const base = Number(raw.replace(/[^\d.]/g,''));
+          if(isNaN(base)) return {ok:false,err:'Enter a number'};
+          const kg = unit.weight==='kg' ? base : Math.round(base*0.453592);
+          return {ok:kg>=s.min && kg<=s.max, err:`Must be ${s.min}-${s.max} kg`, val:kg};
+        }
+        const n = Number(raw.replace(/[^\d.]/g,''));
+        if(isNaN(n)) return {ok:false,err:'Please enter a number.'};
+        if(s.min && n < s.min) return {ok:false,err:`Must be ≥ ${s.min}.`};
+        if(s.max && n > s.max) return {ok:false,err:`Must be ≤ ${s.max}.`};
+        return {ok:true,val:n};
+      }
+      if(s.type==='text'){
+        const t = String(value).trim();
+        if(!t) return {ok:false,err:'Please type something.'};
+        return {ok:true,val:t};
+      }
+      return {ok:true,val:String(value)};
+    }
+
+    function ask(){
+      const s = steps[step];
+      if(!s){
+        bubble("All set! I've saved your basics for this session. You can close the chat.");
+        const h = Number(answers.height||170), w = Number(answers.weight||65);
+        const bmi = Math.round((w/((h/100)**2))*10)/10;
+        bubble(`Quick tip based on BMI ${bmi}: try a ${answers.fit||'Regular'} fit with a ${answers.top||'M'} top and ${answers.bottom||'32'} bottom.`);
+        renderQuick(['Close']);
+        return;
+      }
+      bubble(s.prompt, 'bot');
+      renderQuick(s.options);
+      msg.placeholder = s.type==='number' ? (s.key==='height' && unit.height==='ft' ? "e.g. 5'8" : s.key==='height' ? 'e.g. 170' : unit.weight==='lb' ? 'e.g. 150' : 'e.g. 65') : 'Type here…';
+      msg.focus();
+    }
+
+    function handle(value){
+      const s = steps[step];
+      const v = validate(s, value);
+      bubble(String(value),'me');
+      if(!v.ok){ bubble(v.err); return; }
+      answers[s.key] = v.val;
+      step++;
+      ask();
+    }
+
+    function openChat(){
+      step = 0; answers = {}; messages.innerHTML = ''; quick.innerHTML='';
+      unit.height='cm'; unit.weight='kg';
+      chat.classList.add('show');
+      ask();
+    }
+    function closeChat(){ chat.classList.remove('show'); }
+
+    chatFab.addEventListener('click', openChat);
+    openFromHero.addEventListener('click', openChat);
+    chatClose.addEventListener('click', closeChat);
+
+    send.addEventListener('click', ()=>{ const value = msg.value.trim(); if(!value) return; handle(value); msg.value=''; });
+    msg.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); send.click(); }});
+  </script>
+</body>
+</html>
