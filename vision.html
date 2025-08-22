@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Closet Circle - Your Smart Wardrobe Assistant</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Styles & Tailwind Config */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f5f7fa 0%, #eef2f3 100%);
+        }
+        .btn-primary {
+            @apply bg-violet-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-violet-700 transition-all duration-300;
+        }
+        /* Chatbot Styles */
+        #chat-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        #chat-popup {
+            position: fixed;
+            bottom: 6.5rem;
+            right: 2rem;
+            width: 350px;
+            max-width: 90vw;
+            height: 500px;
+            max-height: 70vh;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform-origin: bottom right;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-violet-600">Closet Circle</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#features" class="text-slate-600 hover:text-violet-600">Features</a>
+                <a href="#how-it-works" class="text-slate-600 hover:text-violet-600">How It Works</a>
+                <a href="#pricing" class="text-slate-600 hover:text-violet-600">Pricing</a>
+            </div>
+             <a href="#contact" class="hidden md:block btn-primary">Get Early Access</a>
+             <div class="md:hidden">
+                <button class="text-slate-800 focus:outline-none">
+                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="gradient-bg py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight">Your Wardrobe, Reimagined.</h1>
+                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">Get daily outfit ideas from an AI stylist using clothes you already own. Reduce waste, save money, and never say "I have nothing to wear" again.</p>
+                <a href="#contact" class="btn-primary mt-8 inline-block text-lg">Join the Waitlist</a>
+            </div>
+        </section>
+
+        <section id="features" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">The Future of Fashion is in Your Closet</h2>
+                    <p class="mt-2 text-slate-500">Closet Circle is more than an app; it's a new way to think about style.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center p-8 border rounded-xl shadow-lg bg-slate-50 transition-transform hover:-translate-y-2">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto text-violet-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12.928 20.298c.222.222.516.333.81.333.295 0 .588-.111.81-.333l.702-.702.702-.702.702-.702c.222-.222.333-.516.333-.81 0-.295-.111-.588-.333-.81l-3.33-3.33-3.414-3.414.702-.702 2.226 2.226c.222.222.516.333.81.333.295 0 .588-.111.81-.333l.702-.702.702-.702.702-.702c.222-.222.333-.516.333-.81 0-.295-.111-.588-.333-.81L14.75 3.51l-.702-.702-.702-.702c-.222-.222-.516-.333-.81-.333-.295 0-.588.111-.81.333l-3.33 3.33-3.414 3.414.702.702 2.226-2.226c.222-.222.516-.333.81-.333.295 0 .588-.111.81.333l.702.702.702.702.702.702c.222.222.333.516.333.81 0 .295-.111.588-.333-.81l-3.33-3.33-3.414-3.414-.702-.702c-.222-.222-.516-.333-.81-.333-.295 0-.588.111-.81.333L3.774 9.174l-.702.702-.702.702c-.222.222-.333.516-.333.81 0 .295.111.588.333.81l3.33 3.33 3.414 3.414-.702.702-2.226-2.226c-.222-.222-.516-.333-.81-.333-.295 0-.588.111-.81.333l-.702.702-.702.702-.702.702c-.222.222-.333.516-.333.81 0 .295.111.588.333.81l3.33 3.33.702.702.702.702c.222.222.516.333.81.333.295 0 .588-.111.81-.333l3.33-3.33 3.414-3.414-.702-.702-2.226 2.226c-.222.222-.516-.333-.81-.333-.295 0-.588.111-.81.333l-.702.702-.702.702-.702.702c-.222.222-.333.516-.333.81 0 .295.111.588.333.81l3.33 3.33z"/></svg>
+                        <h3 class="text-xl font-semibold mt-4">AI Stylist</h3>
+                        <p class="mt-2 text-slate-500">Our smart AI creates personalized outfits from your own clothes, tailored to the weather and your daily events.</p>
+                    </div>
+                    <div class="text-center p-8 border rounded-xl shadow-lg bg-slate-50 transition-transform hover:-translate-y-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto text-violet-500" viewBox="0 0 24 24" fill="currentColor"><path d="M21 2H3v2h18V2zm0 18H3v2h18v-2zM5 6v12h14V6H5zm2 2h10v2H7V8zm0 4h10v2H7v-2z"/></svg>
+                        <h3 class="text-xl font-semibold mt-4">Virtual Wardrobe</h3>
+                        <p class="mt-2 text-slate-500">Digitize your closet to see everything you own at a glance, preventing duplicate buys and making packing a breeze.</p>
+                    </div>
+                    <div class="text-center p-8 border rounded-xl shadow-lg bg-slate-50 transition-transform hover:-translate-y-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto text-violet-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm3.293 12.293l-4 4-1.293-1.293 1.586-1.586-1.586-1.586-4.293 4.293-1.414-1.414 4.293-4.293-1.586-1.586 1.586-1.586L8 8.707l4 4 1.293-1.293-1.586-1.586 1.586-1.586 4.293 4.293-1.414 1.414-4.293-4.293-1.586 1.586 1.586 1.586L15.293 12l-1.293 1.293z"/></svg>
+                        <h3 class="text-xl font-semibold mt-4">Sustainable Fashion</h3>
+                        <p class="mt-2 text-slate-500">Join our community to rent, borrow, and resell clothes. Extend the life of your garments and reduce fashion waste.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="how-it-works" class="py-20">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">Get Styled in Three Easy Steps</h2>
+                </div>
+                <div class="grid md:grid-cols-3 gap-12 relative">
+                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 border-t-2 border-dashed border-slate-300 -translate-y-1/2"></div>
+                    <div class="relative text-center z-10">
+                        <div class="bg-violet-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">1</div>
+                        <h3 class="text-xl font-semibold">Snap & Upload</h3>
+                        <p class="mt-2 text-slate-500">Use our smart-scan to quickly add clothes to your digital wardrobe.</p>
+                    </div>
+                     <div class="relative text-center z-10">
+                        <div class="bg-violet-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">2</div>
+                        <h3 class="text-xl font-semibold">Get AI Suggestions</h3>
+                        <p class="mt-2 text-slate-500">Receive daily outfit ideas based on your unique style and inventory.</p>
+                    </div>
+                     <div class="relative text-center z-10">
+                        <div class="bg-violet-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">3</div>
+                        <h3 class="text-xl font-semibold">Style & Share</h3>
+                        <p class="mt-2 text-slate-500">Confidently pick your outfit and optionally share it with the community.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="py-20 bg-white">
+             <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">Find the Perfect Plan</h2>
+                    <p class="mt-2 text-slate-500">Start for free, and upgrade when you're ready.</p>
+                </div>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+                    <div class="w-full md:w-1/3 p-8 border rounded-xl shadow-lg bg-slate-50">
+                        <h3 class="text-2xl font-semibold">Starter</h3>
+                        <p class="mt-2 text-slate-500">Perfect for getting organized.</p>
+                        <p class="text-4xl font-bold mt-6">Free</p>
+                        <ul class="mt-6 space-y-3">
+                            <li>✓ Up to 50 Garments</li>
+                            <li>✓ Basic AI Outfit Suggestions</li>
+                            <li>✓ Community Access</li>
+                        </ul>
+                        <a href="#contact" class="block text-center mt-8 w-full bg-slate-200 text-slate-800 font-semibold py-3 px-5 rounded-lg">Get Started</a>
+                    </div>
+                     <div class="w-full md:w-1/3 p-8 border-2 border-violet-600 rounded-xl shadow-2xl bg-white relative">
+                        <p class="absolute top-0 -translate-y-1/2 bg-violet-600 text-white text-sm font-semibold px-4 py-1 rounded-full">Most Popular</p>
+                        <h3 class="text-2xl font-semibold text-violet-600">Pro</h3>
+                        <p class="mt-2 text-slate-500">For the ultimate style enthusiast.</p>
+                        <p class="text-4xl font-bold mt-6">₹299 <span class="text-lg font-normal">/ month</span></p>
+                        <ul class="mt-6 space-y-3">
+                            <li>✓ Unlimited Garments</li>
+                            <li>✓ Advanced AI Styling & Analytics</li>
+                            <li>✓ Weather & Event Integration</li>
+                            <li>✓ Priority Support</li>
+                        </ul>
+                        <a href="#contact" class="btn-primary mt-8 w-full block text-center">Go Pro</a>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <section id="contact" class="py-20 gradient-bg">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold">Join the Fashion Revolution Today</h2>
+                <p class="mt-2 text-slate-500 max-w-xl mx-auto">Be the first to know when Closet Circle launches. Sign up for early access and exclusive perks.</p>
+                <div class="mt-8 max-w-md mx-auto flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="Enter your email" class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-violet-500">
+                    <button type="submit" class="btn-primary flex-shrink-0">Join Waitlist</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Closet Circle. Made with ❤️ in Ahmedabad.</p>
+        </div>
+    </footer>
+
+    <div id="chat-widget">
+        <div id="chat-popup" class="hidden scale-0">
+            <div class="bg-violet-600 text-white p-4 flex items-center justify-between">
+                <h3 class="font-semibold">Style Assistant</h3>
+                <button id="close-chat-btn" class="text-white hover:text-indigo-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-slate-50 flex flex-col">
+                </div>
+            <div id="quick-replies" class="p-2 border-t bg-slate-100 flex flex-wrap gap-2 justify-center">
+                </div>
+            <div class="p-2 border-t bg-white">
+                <div class="flex gap-2">
+                    <input type="text" id="chat-input" placeholder="Type your answer..." class="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-500">
+                    <button id="send-btn" class="btn-primary px-4">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <button id="toggle-chat-btn" class="bg-violet-600 text-white w-16 h-16 rounded-full shadow-xl flex items-center justify-center transition-transform hover:scale-110">
+             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+        </button>
+    </div>
+
+    <script>
+        // --- Chatbot JavaScript (Survey Version) ---
+        const toggleChatBtn = document.getElementById('toggle-chat-btn');
+        const chatPopup = document.getElementById('chat-popup');
+        const closeChatBtn = document.getElementById('close-chat-btn');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        const quickRepliesContainer = document.getElementById('quick-replies');
+
+        let currentStep = 0;
+        let userData = {};
+
+        // --- Define the sequence of questions ---
+        const surveySteps = [
+            {
+                key: 'gender',
+                prompt: 'To personalize your style, I need to ask a few quick questions. First, what is your gender?',
+                replies: ['Male', 'Female', 'Other']
+            },
+            {
+                key: 'height',
+                prompt: 'Got it. What is your height? (e.g., 5\'10" or 178cm)'
+            },
+            {
+                key: 'weight',
+                prompt: 'Thanks. And your weight? (e.g., 75kg or 165lbs)'
+            },
+            {
+                key: 'topSize',
+                prompt: 'What is your usual top size? (e.g., M, L, 42)'
+            },
+            {
+                key: 'bottomSize',
+                prompt: 'Perfect. And finally, what is your bottom size? (e.g., 32, M, 12)'
+            }
+        ];
+
+        // Function to toggle chat popup visibility
+        function toggleChat() {
+            chatPopup.classList.toggle('hidden');
+            chatPopup.classList.toggle('scale-0');
+            chatPopup.classList.toggle('scale-100');
+        }
+
+        // Function to add a message to the chat log
+        function addMessage(text, sender = 'bot') {
+            const messageElement = document.createElement('div');
+            messageElement.className = `p-3 rounded-2xl max-w-[85%] mb-2 break-words ${sender === 'bot' ? 'bg-slate-200 self-start' : 'bg-violet-600 text-white self-end'}`;
+            messageElement.textContent = text;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Function to show quick replies for specific steps
+        function showQuickReplies(replies) {
+            quickRepliesContainer.innerHTML = '';
+            if (replies && replies.length > 0) {
+                quickRepliesContainer.classList.remove('hidden');
+                replies.forEach(reply => {
+                    const button = document.createElement('button');
+                    button.textContent = reply;
+                    button.className = 'bg-violet-100 text-violet-700 text-sm font-semibold px-3 py-1 rounded-full hover:bg-violet-200';
+                    button.onclick = () => processUserInput(reply);
+                    quickRepliesContainer.appendChild(button);
+                });
+            } else {
+                quickRepliesContainer.classList.add('hidden');
+            }
+        }
+        
+        // Function to ask the next question in the sequence
+        function askNextQuestion() {
+            if (currentStep < surveySteps.length) {
+                const step = surveySteps[currentStep];
+                setTimeout(() => {
+                    addMessage(step.prompt);
+                    showQuickReplies(step.replies || []);
+                }, 400);
+            } else {
+                // End of survey
+                setTimeout(() => {
+                    addMessage("All set! Thank you. Your personalized style profile is ready. We'll use this to give you the best recommendations.");
+                    console.log("Collected User Data:", userData); // Data is ready to be used
+                    quickRepliesContainer.innerHTML = '';
+                    chatInput.disabled = true;
+                    sendBtn.disabled = true;
+                }, 500);
+            }
+        }
+
+        // Function to process user's input and move to the next step
+        function processUserInput(input) {
+            if (currentStep >= surveySteps.length) return;
+
+            addMessage(input, 'user');
+            
+            const currentStepKey = surveySteps[currentStep].key;
+            userData[currentStepKey] = input;
+            
+            currentStep++;
+            askNextQuestion();
+        }
+
+        // Function to start or reset the chat
+        function startChat() {
+            currentStep = 0;
+            userData = {};
+            chatMessages.innerHTML = '';
+            chatInput.disabled = false;
+            sendBtn.disabled = false;
+            
+            addMessage("Hi there! I'm the Closet Circle Style Assistant.");
+            askNextQuestion();
+        }
+
+        // --- Event Listeners ---
+        toggleChatBtn.addEventListener('click', () => {
+             toggleChat();
+             if (!chatPopup.classList.contains('hidden') && chatMessages.children.length === 0) {
+                 startChat();
+             }
+        });
+
+        closeChatBtn.addEventListener('click', toggleChat);
+        
+        sendBtn.addEventListener('click', () => {
+            const userInput = chatInput.value.trim();
+            if (userInput) {
+                processUserInput(userInput);
+                chatInput.value = '';
+            }
+        });
+        
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
